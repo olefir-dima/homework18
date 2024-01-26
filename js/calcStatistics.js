@@ -1,5 +1,5 @@
 export function calcStatistics(text) {
-  const words = text.split(/\s+/);
+  const words = split(text);
   const uniqueWords = new Set(words);
 
   const statistics = new Map();
@@ -12,4 +12,25 @@ export function calcStatistics(text) {
     uniqueWords: uniqueWords.size,
     occurrences: Object.fromEntries(statistics),
   };
+}
+
+function split(text) {
+  const words = [];
+  let currentWord = "";
+  for (let char of text) {
+    if (char === " " || char === "\t" || char === "\n" || char === "\r") {
+      if (currentWord !== "") {
+        words.push(currentWord.toLowerCase());
+        currentWord = "";
+      }
+    } else {
+      currentWord += char;
+    }
+  }
+
+  if (currentWord !== "") {
+    words.push(currentWord.toLowerCase());
+  }
+
+  return words;
 }
